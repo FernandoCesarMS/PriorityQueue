@@ -13,7 +13,11 @@ using std::string;
 // Define como cada nó da lista encadeada é implementado.
 // Cada nó armazena um elemento da fila e sua respectiva prioridade.
 // É definido aqui, mas só é implementado no arquivo FilaDePrioridade.cpp
-struct No;
+struct No{
+  string nome;
+  No* proximo;
+	int idade;
+}
 
 class FilaDePrioridade {
  public:
@@ -44,9 +48,9 @@ class FilaDePrioridade {
 
  private:
   // Número de elementos da fila.
-  int tamanho_;  
+  int size;  
 
   // Ponteiro para o primeiro da lista encadeada. 
   // Quando tamanho_ == 0, o valor deste ponteiro é nullptr.
-  No* primeiro_;  
+  No* first;  
 };
