@@ -24,22 +24,22 @@ bool FilaDePrioridade::vazia() const{
 }
 
 void FilaDePrioridade::RemoverPrimeiro(){
-    if (this->!vazia()){
+    if (!(this->vazia())){
         if (this->tamanho() != 1){
             No* aux = new No();
-            aux->nome = this->first->proximo.nome;
-            aux->idade = this->first->proximo.idade;
+            aux->nome = this->first->proximo->nome;
+            aux->idade = this->first->proximo->idade;
             aux->proximo = this->first->proximo->proximo;
             this->first = aux;
         }
         else{
             No* aux = new No();
-            aux->nome = NULL;
+            aux->nome = nullptr;
             aux->idade = NULL;
             aux->proximo = nullptr;
             this->first = aux;
         }
-        tamanho--;
+        this->size--;
     } 
 }
 
@@ -63,8 +63,8 @@ void FilaDePrioridade::Inserir(int p, string s){
 void FilaDePrioridade::Limpar(){
     this->size = 0;
     No* aux = new No();
-    aux.nome = NULL;
-    aux.idade = NULL;
+    aux->nome = nullptr;
+    aux->idade = NULL;
     aux->proximo = nullptr;
     this->first = aux;
 }

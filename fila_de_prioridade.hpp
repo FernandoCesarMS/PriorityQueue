@@ -16,8 +16,8 @@ using std::string;
 struct No{
   string nome;
   No* proximo;
-	int idade;
-}
+  int idade;
+};
 
 class FilaDePrioridade {
  public:
