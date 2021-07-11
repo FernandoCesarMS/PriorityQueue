@@ -17,6 +17,21 @@ struct No{
   string nome;
   No* proximo;
   int idade;
+  No(){
+      idade = 0;
+      nome = "";
+      proximo = nullptr;
+  }
+  No(int p, string s){
+      idade = p;
+      nome = s;
+      proximo = nullptr;
+  }
+  No(int p, string s, No* prox){
+      idade = p;
+      nome = s;
+      proximo = prox;
+  }
 };
 
 class FilaDePrioridade {

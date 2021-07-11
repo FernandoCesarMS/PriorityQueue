@@ -1,4 +1,5 @@
-#include "fila_de_prioridade.hpp"
+#include "fila_de_prioridade.h"
+#include <iostream>
 
 FilaDePrioridade::FilaDePrioridade(){
     this->size = 0;
@@ -35,7 +36,7 @@ void FilaDePrioridade::RemoverPrimeiro(){
         else{
             No* aux = new No();
             aux->nome = nullptr;
-            aux->idade = NULL;
+            aux->idade = 0;
             aux->proximo = nullptr;
             this->first = aux;
         }
@@ -44,27 +45,18 @@ void FilaDePrioridade::RemoverPrimeiro(){
 }
 
 void FilaDePrioridade::Inserir(int p, string s){
-    if (this->vazia()){
-        this->first->nome = s;
-        this->first->idade = p;
-        this->first->proximo = nullptr;
-    }
-    else{
-        No* aux = new No();
-        aux->nome = this->first->nome;
-        aux->idade = this->first->idade;
-        aux->proximo = this->first->proximo;
-        this->first->nome = s;
-        this->first->idade = p;
-        this->first->proximo = aux;
-    }
+    if (this->vazia())
+        this->first = new No(p,s);
+    else
+        this->first = new No(p,s,new No(this->first->idade, this->first->nome, this->first->proximo));
+    size++;
 }
 
 void FilaDePrioridade::Limpar(){
     this->size = 0;
     No* aux = new No();
     aux->nome = nullptr;
-    aux->idade = NULL;
+    aux->idade = 0;
     aux->proximo = nullptr;
     this->first = aux;
 }
