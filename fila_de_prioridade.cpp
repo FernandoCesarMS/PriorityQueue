@@ -1,5 +1,6 @@
 #include "fila_de_prioridade.h"
 #include <iostream>
+#include <vector>
 
 FilaDePrioridade::FilaDePrioridade(){
     this->size = 0;
@@ -7,8 +8,21 @@ FilaDePrioridade::FilaDePrioridade(){
 }
 
 string FilaDePrioridade::primeiro() const{
-    if (!vazia())
-        return this->first->nome;
+    if (!vazia()){
+        string biggestAgeName = "";
+        int valueToBeRemoved = 0, biggestAge = -1;
+        No* aux = this->first;
+        for (int i = 0; i < this->tamanho(); i++){
+            if (aux->idade >= biggestAge){
+                biggestAge = aux->idade;
+                valueToBeRemoved = i;
+                biggestAgeName = aux->nome;
+            }
+            if (aux->proximo != nullptr)
+                aux = new No(aux->proximo->idade, aux->proximo->nome, aux->proximo->proximo);
+        }
+        return biggestAgeName;
+    }
     else
         return "";
 }
@@ -25,39 +39,40 @@ bool FilaDePrioridade::vazia() const{
 }
 
 void FilaDePrioridade::RemoverPrimeiro(){
-    if (!(this->vazia())){
-        if (this->tamanho() != 1){
-            No* aux = new No();
-            aux->nome = this->first->proximo->nome;
-            aux->idade = this->first->proximo->idade;
-            aux->proximo = this->first->proximo->proximo;
-            this->first = aux;
+    int valueToBeRemoved = 0, biggestAge = -1;
+    std::vector <int> oldQueueAges;
+    std::vector <string> oldQueueNames;
+    No* aux = this->first;
+    for (int i = 0; i < this->tamanho(); i++){
+        oldQueueAges.push_back(aux->idade);
+        oldQueueNames.push_back(aux->nome);
+        if (aux->idade >= biggestAge){
+            biggestAge = aux->idade;
+            valueToBeRemoved = i;
         }
-        else{
-            No* aux = new No();
-            aux->nome = nullptr;
-            aux->idade = 0;
-            aux->proximo = nullptr;
-            this->first = aux;
+        if (aux->proximo != nullptr)
+            aux = new No(aux->proximo->idade, aux->proximo->nome, aux->proximo->proximo);
+    }
+    this->Limpar();
+    for (int i = oldQueueAges.size() - 1; i >= 0 ; i--){
+        if (i != valueToBeRemoved){
+            this->Inserir(oldQueueAges[i],oldQueueNames[i]);
         }
-        this->size--;
-    } 
+    }
 }
 
 void FilaDePrioridade::Inserir(int p, string s){
-    if (this->vazia())
+    if (this->vazia()){
         this->first = new No(p,s);
-    else
+    }
+    else{
         this->first = new No(p,s,new No(this->first->idade, this->first->nome, this->first->proximo));
+    }
     size++;
 }
 
 void FilaDePrioridade::Limpar(){
     this->size = 0;
-    No* aux = new No();
-    aux->nome = nullptr;
-    aux->idade = 0;
-    aux->proximo = nullptr;
-    this->first = aux;
+    this->first = new No();
 }
 
